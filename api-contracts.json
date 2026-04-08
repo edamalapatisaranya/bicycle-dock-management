@@ -1,0 +1,644 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Bicycle Dock Management API",
+    "version": "1.0.0",
+    "description": "CRUD APIs for Dock, Rider, and DockRider resources"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local development"
+    }
+  ],
+  "paths": {
+    "/api/docks": {
+      "post": {
+        "summary": "Create a dock",
+        "tags": ["Dock"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DockInput" },
+              "example": {
+                "dock_id": 1,
+                "dock_location": "hotel",
+                "parking_capacity": 30
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Dock created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Dock" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all docks",
+        "tags": ["Dock"],
+        "responses": {
+          "200": {
+            "description": "List of docks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Dock" }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/docks/{dock_id}": {
+      "get": {
+        "summary": "Get a dock by dock_id",
+        "tags": ["Dock"],
+        "parameters": [
+          {
+            "name": "dock_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dock found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Dock" }
+              }
+            }
+          },
+          "404": {
+            "description": "Dock not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a dock",
+        "tags": ["Dock"],
+        "parameters": [
+          {
+            "name": "dock_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DockInput" },
+              "example": {
+                "dock_location": "station",
+                "parking_capacity": 50
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dock updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Dock" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "404": {
+            "description": "Dock not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a dock",
+        "tags": ["Dock"],
+        "parameters": [
+          {
+            "name": "dock_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dock deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Dock deleted" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Dock not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/riders": {
+      "post": {
+        "summary": "Create a rider",
+        "tags": ["Rider"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RiderInput" },
+              "example": {
+                "rider_id": 45,
+                "rider_name": "xyz",
+                "cycle_model": "hero"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Rider created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Rider" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all riders",
+        "tags": ["Rider"],
+        "responses": {
+          "200": {
+            "description": "List of riders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Rider" }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/riders/{rider_id}": {
+      "get": {
+        "summary": "Get a rider by rider_id",
+        "tags": ["Rider"],
+        "parameters": [
+          {
+            "name": "rider_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rider found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Rider" }
+              }
+            }
+          },
+          "404": {
+            "description": "Rider not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a rider",
+        "tags": ["Rider"],
+        "parameters": [
+          {
+            "name": "rider_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RiderInput" },
+              "example": {
+                "rider_name": "abc",
+                "cycle_model": "atlas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Rider updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Rider" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "404": {
+            "description": "Rider not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a rider",
+        "tags": ["Rider"],
+        "parameters": [
+          {
+            "name": "rider_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rider deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Rider deleted" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Rider not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/dock-riders": {
+      "post": {
+        "summary": "Create a dock rider",
+        "tags": ["DockRider"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DockRiderInput" },
+              "example": {
+                "rider_id": 23,
+                "rental_duration": 30
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "DockRider created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DockRider" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all dock riders",
+        "tags": ["DockRider"],
+        "responses": {
+          "200": {
+            "description": "List of dock riders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/DockRider" }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/dock-riders/{id}": {
+      "get": {
+        "summary": "Get a dock rider by id",
+        "tags": ["DockRider"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "DockRider found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DockRider" }
+              }
+            }
+          },
+          "404": {
+            "description": "DockRider not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a dock rider",
+        "tags": ["DockRider"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DockRiderInput" },
+              "example": {
+                "rental_duration": 60
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "DockRider updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DockRider" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "404": {
+            "description": "DockRider not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a dock rider",
+        "tags": ["DockRider"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "DockRider deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "DockRider deleted" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "DockRider not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "tags": ["Health"],
+        "responses": {
+          "200": {
+            "description": "Service is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "ok" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DockInput": {
+        "type": "object",
+        "required": ["dock_id", "dock_location", "parking_capacity"],
+        "properties": {
+          "dock_id": { "type": "integer", "example": 1 },
+          "dock_location": { "type": "string", "example": "hotel" },
+          "parking_capacity": { "type": "integer", "example": 30 }
+        }
+      },
+      "Dock": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string", "example": "665a1b2c3d4e5f6a7b8c9d0e" },
+          "dock_id": { "type": "integer", "example": 1 },
+          "dock_location": { "type": "string", "example": "hotel" },
+          "parking_capacity": { "type": "integer", "example": 30 },
+          "createdAt": { "type": "integer", "format": "int64", "example": 1717200000000 },
+          "updatedAt": { "type": "integer", "format": "int64", "example": 1717200000000 },
+          "__v": { "type": "integer", "example": 0 }
+        }
+      },
+      "RiderInput": {
+        "type": "object",
+        "required": ["rider_id", "rider_name", "cycle_model"],
+        "properties": {
+          "rider_id": { "type": "integer", "example": 45 },
+          "rider_name": { "type": "string", "example": "xyz" },
+          "cycle_model": { "type": "string", "example": "hero" }
+        }
+      },
+      "Rider": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string", "example": "665a1b2c3d4e5f6a7b8c9d0f" },
+          "rider_id": { "type": "integer", "example": 45 },
+          "rider_name": { "type": "string", "example": "xyz" },
+          "cycle_model": { "type": "string", "example": "hero" },
+          "createdAt": { "type": "integer", "format": "int64", "example": 1717200000000 },
+          "updatedAt": { "type": "integer", "format": "int64", "example": 1717200000000 },
+          "__v": { "type": "integer", "example": 0 }
+        }
+      },
+      "DockRiderInput": {
+        "type": "object",
+        "required": ["rider_id", "rental_duration"],
+        "properties": {
+          "rider_id": { "type": "integer", "example": 23 },
+          "rental_duration": { "type": "integer", "description": "Duration in minutes", "example": 30 }
+        }
+      },
+      "DockRider": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string", "example": "665a1b2c3d4e5f6a7b8c9d10" },
+          "id": { "type": "string", "format": "uuid", "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479" },
+          "rider_id": { "type": "integer", "example": 23 },
+          "rental_duration": { "type": "integer", "example": 30 },
+          "createdAt": { "type": "integer", "format": "int64", "example": 1717200000000 },
+          "updatedAt": { "type": "integer", "format": "int64", "example": 1717200000000 },
+          "__v": { "type": "integer", "example": 0 }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string", "example": "Validation failed" }
+        }
+      }
+    }
+  }
+}
