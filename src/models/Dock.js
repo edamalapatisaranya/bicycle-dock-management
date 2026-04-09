@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 
 const dockSchema = new mongoose.Schema({
   dock_id: {
-    type: Number,
-    required: true,
+    type: String,
+    default: () => `dock:${uuidv4()}`,
     unique: true,
   },
   dock_location: {
@@ -15,11 +16,11 @@ const dockSchema = new mongoose.Schema({
     required: true,
   },
   createdAt: {
-    type: Number, // epoch milliseconds
+    type: Number,
     default: () => Date.now(),
   },
   updatedAt: {
-    type: Number, // epoch milliseconds
+    type: Number,
     default: () => Date.now(),
   },
 }, { timestamps: false });

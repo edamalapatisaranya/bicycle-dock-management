@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Rider = require('../models/Rider');
 
-// Create
+// Create — rider_id is auto-generated
 router.post('/', async (req, res) => {
   try {
     const rider = new Rider(req.body);

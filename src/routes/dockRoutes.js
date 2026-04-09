@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Dock = require('../models/Dock');
 
-// Create
+// Create — dock_id is auto-generated
 router.post('/', async (req, res) => {
   try {
     const dock = new Dock(req.body);

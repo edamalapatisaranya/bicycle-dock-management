@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 
 const riderSchema = new mongoose.Schema({
   rider_id: {
-    type: Number,
-    required: true,
+    type: String,
+    default: () => `rider:${uuidv4()}`,
     unique: true,
   },
   rider_name: {

@@ -7,12 +7,16 @@ const dockRiderSchema = new mongoose.Schema({
     default: () => uuidv4(),
     unique: true,
   },
+  dock_id: {
+    type: String,
+    required: true,
+  },
   rider_id: {
-    type: Number,
+    type: String,
     required: true,
   },
   rental_duration: {
-    type: Number, // in minutes
+    type: Number,
     required: true,
   },
   createdAt: {
